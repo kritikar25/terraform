@@ -13,7 +13,7 @@ provider "aws" {
 }
 
 resource "aws_iam_policy" "policy" {
-  name        = "-policy"
+  name        = "-policy1"
   description = "My test policy"
 
   policy = <<EOT
@@ -33,7 +33,7 @@ EOT
 }
 
 resource "aws_iam_role" "role" {
-  name = "s3-access-to-ec2-role"
+  name = "s3-access-to-ec2-role1"
 
   assume_role_policy = <<EOF
 {
@@ -58,7 +58,7 @@ resource "aws_iam_role_policy_attachment" "test-attach" {
 }
 
 resource "aws_iam_instance_profile" "profile" {
-  name = "profile"
+  name = "profile1"
   role = aws_iam_role.role.name
 }
 
@@ -78,8 +78,7 @@ sudo yum install zip  -y
 sudo unzip apache-tomcat-8.5.91.zip
 sudo mv apache-tomcat-8.5.91 /mnt/tomcat
 KEY=`aws s3 ls $BUCKET --recursive | sort | tail -n 1 | awk '{print $4}'`
-aws s3 cp s3://$BUCKET/$KEY /mnt/tomcat/webapps/
-sudo mv /mnt/tomcat/webapps/$KEY /mnt/tomcat/webapps/student
+aws s3 cp s3://$BUCKET/$KEY /mnt/tomcat/webapps/student.war
 sudo chown -R ec2-user: /mnt/tomcat
 cd /mnt/tomcat/bin
 sudo chmod 755 *
